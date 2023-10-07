@@ -1,7 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions
-import time
-from time import time
+from time import time, sleep
 from html2text import html2text
 from bs4 import BeautifulSoup
 from llama_index import (
@@ -24,12 +23,12 @@ from llama_index.indices.postprocessor import SimilarityPostprocessor
 t0 = time()
 # 1. set up llm and embedding models
 cfg = {
-    'max_new_tokens': 1024, 
+    'max_new_tokens': 512, 
     'repetition_penalty': 1.1,
     'temperature': 0.7,
     'context_length': 8192,
     'stop': ["<|im_end|>", "<|im_start|>"],
-    'reset': True
+    'reset': False
 }
 
 llm = CTransformers(model='TheBloke/Mistral-7B-OpenOrca-GGUF', model_file='mistral-7b-openorca.Q4_K_M.gguf', config=cfg)
@@ -75,7 +74,7 @@ if not index_loaded:
 
     for url in urls:
         driver.get(url)
-        time.sleep(0.5)
+        sleep(0.5)
 
         content = driver.page_source.encode('utf-8').strip()
         soup = BeautifulSoup(content, "html.parser")
@@ -113,28 +112,28 @@ if not index_loaded:
 print("Index loaded...")
 
 # 4. QUERY TIME
-# template = """<|im_start|>system
-# We have provided context information below. 
-# ---------------------
-# {context_str}
-# ---------------------
-# Answer all questions given this information and without using prior information. If you are unable to answer a question, please write 'I don't know'.<|im_end|>
-# <|im_start|>user
-# {query_str}<|im_end|>
-# <|im_start|>assistant
-# """
+template = """<|im_start|>system
+We have provided context information below. 
+---------------------
+{context_str}
+---------------------
+Answer all questions given this information and without using prior information. If you are unable to answer a question, please write 'I don't know'.<|im_end|>
+<|im_start|>user
+{query_str}<|im_end|>
+<|im_start|>assistant
+"""
 
 
-# qa_prompt = Prompt(template)
-# synth = get_response_synthesizer(text_qa_template=qa_prompt)
+qa_prompt = Prompt(template)
+synth = get_response_synthesizer(text_qa_template=qa_prompt)
 
-# # postprocessor = [SimilarityPostprocessor(similarity_cutoff=0.5)]
-# retriever = index.as_retriever(retriever_mode="embedding")
-# query_engine = RetrieverQueryEngine(
-#     retriever, 
-#     synth, 
-#     # node_postprocessors=postprocessor
-# )
+postprocessor = [SimilarityPostprocessor(similarity_cutoff=0.7)]
+retriever = index.as_retriever(retriever_mode="embedding")
+query_engine = RetrieverQueryEngine(
+    retriever, 
+    synth, 
+    node_postprocessors=postprocessor
+)
 
-response = query_engine.query("My teenage daughter has ADHD, how can I help her?")
-# print(f"\nResponse:\n{response}\n\n{'='*20}\nTime elapsed: {(time() - t0):.4f}s")
+response = query_engine.query("What are some common symptoms and challenges faced by individuals with ADHD, and how can a comprehensive treatment plan help in managing this condition effectively?")
+print(f"\nResponse:\n{response}\n\n{'='*20}\nTime elapsed: {(time() - t0):.4f}s")
