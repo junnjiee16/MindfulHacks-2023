@@ -12,7 +12,6 @@ import NavHoverBox from '../components/NavHoverBox.jsx'
 import { Link } from 'react-router-dom'
 
 export default function NavItem({ icon, title, description, route, active, navSize }) {
-    console.log(`NavItem ${title} is pointing to: ${route}`);
     return (
         <Flex
             mt={30}
@@ -28,10 +27,7 @@ export default function NavItem({ icon, title, description, route, active, navSi
                     borderRadius={8}
                     _hover={{ textDecor: 'none', backgroundColor: "#AEC8CA" }}
                     w={navSize == "large" && "100%"}
-                    onClick={()=> {
-                        console.log(`${route} clicked!!!!`)
-                    }}
-
+          
                 >
                     <MenuButton w="100%">
                         <Flex>
