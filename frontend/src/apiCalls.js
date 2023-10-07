@@ -18,3 +18,19 @@ export async function textToEmoji(todoTitle) {
     return response;
   }
   
+export async function getLLMResponse(usr_inp) {
+  let response;
+  try {
+    response = await axios.post(
+      "http://127.0.0.1:5000/chat",
+      { prompt: usr_inp }
+    );
+  } catch (error) {
+    console.log("DEBUG ERROR", error);
+      error.code == "ERR_NETWORK"
+        ? (response = null)
+        : (response = error.response);
+  }
+
+  return response;
+}

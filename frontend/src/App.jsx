@@ -8,6 +8,7 @@ import { HomePage } from './pages/HomePage';
 import { TaskPlannerPage } from './pages/TaskPlannerPage';
 import { JournalPage } from './pages/JournalPage';
 import { Example } from './pages/framer.jsx';
+import { Chatbot } from './pages/chatbot.jsx';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
               <Route path={"/planner"} element={<TaskPlannerPage />} />
               <Route path={"/journal"} element={<JournalPage />} />
               <Route path={"/framer"} element={<Example />} />
+              <Route path={"/chatbot"} element={<Chatbot />} />
             </Routes>
           </Box>
         </Router>
