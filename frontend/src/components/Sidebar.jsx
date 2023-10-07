@@ -14,12 +14,15 @@ import {
     FiUser,
     FiDollarSign,
     FiBriefcase,
-    FiSettings
+    FiSettings,
+    FiSpeaker
+
 } from 'react-icons/fi'
+
 import { IoPawOutline } from 'react-icons/io5'
 import NavItem from '../components/NavItem.jsx'
 
-export default function Sidebar() {
+export function Sidebar() {
     const [navSize, changeNavSize] = useState("large")
     return (
         <Flex
@@ -52,13 +55,11 @@ export default function Sidebar() {
                             changeNavSize("small")
                     }}
                 />
-                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" description="This is the description for the dashboard." />
-                <NavItem navSize={navSize} icon={FiCalendar} title="Calendar" active />
-                <NavItem navSize={navSize} icon={FiUser} title="Clients" />
-                <NavItem navSize={navSize} icon={IoPawOutline} title="Animals" />
-                <NavItem navSize={navSize} icon={FiDollarSign} title="Stocks" />
-                <NavItem navSize={navSize} icon={FiBriefcase} title="Reports" />
-                <NavItem navSize={navSize} icon={FiSettings} title="Settings" />
+                <NavItem navSize={navSize} icon={FiHome} title="Dashboard" description="This is the description for the dashboard." route = "/" />
+                <NavItem navSize={navSize} icon={FiCalendar} title="To-Do-List" route = "/planner" />
+                <NavItem navSize={navSize} icon={FiBriefcase} title="Journal" route = "/journal"/>
+                <NavItem navSize={navSize} icon={FiSpeaker} title="Chatbot" route = "/"/>
+
             </Flex>
 
             <Flex

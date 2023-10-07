@@ -3,14 +3,16 @@ import {
     Flex,
     Text,
     Icon,
-    Link,
     Menu,
     MenuButton,
     MenuList
 } from '@chakra-ui/react'
-import NavHoverBox from '../components/NavHoverBox.jsx'
 
-export default function NavItem({ icon, title, description, active, navSize }) {
+import NavHoverBox from '../components/NavHoverBox.jsx'
+import { Link } from 'react-router-dom'
+
+export default function NavItem({ icon, title, description, route, active, navSize }) {
+    console.log(`NavItem ${title} is pointing to: ${route}`);
     return (
         <Flex
             mt={30}
@@ -20,11 +22,16 @@ export default function NavItem({ icon, title, description, active, navSize }) {
         >
             <Menu placement="right">
                 <Link
+                    to={route}
                     backgroundColor={active && "#AEC8CA"}
                     p={3}
                     borderRadius={8}
                     _hover={{ textDecor: 'none', backgroundColor: "#AEC8CA" }}
                     w={navSize == "large" && "100%"}
+                    onClick={()=> {
+                        console.log(`${route} clicked!!!!`)
+                    }}
+
                 >
                     <MenuButton w="100%">
                         <Flex>
