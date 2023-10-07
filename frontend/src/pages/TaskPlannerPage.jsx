@@ -12,7 +12,7 @@ import { CreateTaskModal } from "../components/CreateTaskModal";
 
 export function TaskPlannerPage() {
     return (
-        <Box>
+        <Box p = "10px">
             <Flex columnGap={"2em"}>
                 <Box fontWeight={"bold"} fontSize={"1.6em"} mb="1.4em">Planner</Box>
                 <CreateTaskModal />
@@ -20,6 +20,10 @@ export function TaskPlannerPage() {
             </Flex>
 
             <TaskListing title="Hello Task List" duration="1h 30m" />
+            <TaskListing title="Hello Task List" duration="1h 30m" />
+            <TaskListing title="Hello Task List" duration="1h 30m" />
+            <TaskListing title="Hello Task List" duration="1h 30m" />
+
         </Box>
     )
 }
