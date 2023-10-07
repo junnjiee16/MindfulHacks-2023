@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+    Box,
     Button,
     Modal,
     ModalOverlay,
@@ -25,6 +26,7 @@ export function CreateTaskModal() {
     const [title, setTitle] = useState("");
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [taskName, setTaskName] = useState("");
+    const [emoji, setEmoji] = useState("");
     // in minutes
     const [taskTimeLimit, setTaskTimeLimit] = useState(0);
 
@@ -33,7 +35,8 @@ export function CreateTaskModal() {
     const predictEmoji = async () => {
         console.log('Calling predictEmoji');
         const res = await textToEmoji(title);
-        console.log(res);
+        setEmoji(res.data.emoji);
+        console.log(res.data)
     }
 
     return (
@@ -46,6 +49,7 @@ export function CreateTaskModal() {
                     <ModalHeader>Create your Task!</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
+                        <Box fontSize={"3.5em"}>{emoji}</Box>
                         <FormControl>
                             <FormLabel>Name of Task</FormLabel>
                             <Input onChange={e => { handleTextChange(e); predictEmoji() }} />
@@ -55,7 +59,6 @@ export function CreateTaskModal() {
                             <NumberInput step={5} defaultValue={15} min={10} max={600}
                                 onChange={() => {
                                     console.log(`Hello?`);
-
                                 }}>
                                 <NumberInputField />
                                 <NumberInputStepper>
