@@ -16,22 +16,25 @@ export function Chatbot() {
     const handleTextChange = (input) => setTodos(input.target.value);
 
     return (
-        <VStack width={"80vw"} height={"80vh"} alignContent={"center"} justifyContent={"center"} direction={"column"}>
-            <Flex>
-                <Input onChange={(e) => {
-                    handleTextChange(e)
-                }} placeholder='Ask something...' width={"50vw"} mr={"10px"}/>
-                <Button onClick={(todos) => {
-                    setResponse("loading...")
-                    handlePrompt(todos)
-                }} bg={"tomato"}>Enter</Button>
-            </Flex>
+        <>
+            <Box fontWeight={"bold"} fontSize={"1.6em"} mb="1.4em">"AI CHATBOT"</Box>
+            <VStack width={"80vw"} height={"80vh"} alignContent={"center"} justifyContent={"center"} direction={"column"}>
+                <Flex>
+                    <Input onChange={(e) => {
+                        handleTextChange(e)
+                    }} placeholder='Ask something...' width={"50vw"} mr={"10px"}/>
+                    <Button onClick={(todos) => {
+                        setResponse("loading...")
+                        handlePrompt(todos)
+                    }} bg={"tomato"}>Enter</Button>
+                </Flex>
 
-            <Text textAlign={"left"} width={"55vw"} align={"justify"}>
-                <Box>
-                    {response}
-                </Box>
-            </Text>
-        </VStack>
+                <Text textAlign={"left"} width={"55vw"} align={"justify"}>
+                    <Box>
+                        {response}
+                    </Box>
+                </Text>
+            </VStack>
+        </>
     )
 }

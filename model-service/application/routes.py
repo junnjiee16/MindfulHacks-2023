@@ -58,7 +58,7 @@ cfg = {
     'temperature': 0.4,
     'context_length': 8192,
     'stop': ["<|im_end|>", "<|im_start|>"],
-    'reset': False
+    'reset': True
 }
 
 llm = CTransformers(model='TheBloke/Mistral-7B-OpenOrca-GGUF', model_file='mistral-7b-openorca.Q4_K_M.gguf', config=cfg)
