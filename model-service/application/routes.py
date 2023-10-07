@@ -5,6 +5,8 @@ from flask import request
 from flask_cors import CORS
 import csv
 import urllib.request
+import json
+import os
 
 CORS(app)
 
@@ -38,3 +40,23 @@ def call_predict_emoji():
     data = request.get_json()
     print(data)
     return {"emoji": predict_emoji(data['text'])}
+
+# API to save task data
+@app.route("/save-task", methods=['POST'])
+def save_task():
+    data = request.get_json()
+    with open(os.path.join(os.getcwd(), "application\\todoDatabase.json"), "r") as file:
+        data_dict = json.load(file)
+
+    # create dict
+    new_dict = {
+        "task": data['task'],
+        "time": data['time'],
+        "emoji": data['emoji']
+    }
+    data_dict.append(new_dict)
+
+    with open(os.path.join(os.getcwd(), "application\\todoDatabase.json"), "w") as file:
+        json.dump(data_dict, file)
+    
+    return data_dict
