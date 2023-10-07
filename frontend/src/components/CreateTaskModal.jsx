@@ -1,6 +1,7 @@
 import fs from 'fs';
 import { useState, useRef } from 'react'
 import {
+    Box,
     Button,
     Modal,
     ModalOverlay,
@@ -28,6 +29,7 @@ export function CreateTaskModal() {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [taskName, setTaskName] = useState("");
+    const [emoji, setEmoji] = useState("");
     // in minutes
     const [taskTimeLimit, setTaskTimeLimit] = useState(15);
 
@@ -35,8 +37,21 @@ export function CreateTaskModal() {
 
     const predictEmoji = async () => {
         console.log('Calling predictEmoji');
-        const res = await textToEmoji(title);
-        console.log(res);
+        const res = await textToEmoji(taskName);
+        setEmoji(res.data.emoji);
+        console.log(res.data)
+    }
+
+
+    // function:
+    // import json as js object
+    // add new task to js object
+    // save js object to json file
+    function addNewObject(newObj) {
+        var newTasksData = tasksData;
+        newTasksData.push(newObj);
+        var jsonStr = JSON.stringify(newTasksData);
+        fs.writeFileSync(`../todoDatabase.json`, jsonStr);
     }
     const handleNumberChange = (newValue) => {
         setTaskTimeLimit(newValue);
@@ -63,12 +78,14 @@ export function CreateTaskModal() {
                     <ModalHeader>Create your Task!</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
+                        <Box fontSize={"3.5em"}>{emoji}</Box>
                         <FormControl>
                             <FormLabel>Name of Task</FormLabel>
                             <Input
-                                onChange={e => { handleTextChange(e); }}
+                                // onChange={e => { handleTextChange(e); }}
+                                onChange={e => { handleTextChange(e); predictEmoji() }}
                             />
-                            {/* onChange={e => { handleTextChange(e); predictEmoji() }} */}
+                            
                         </FormControl>
                         <FormControl>
                             <FormLabel>Minutes</FormLabel>
