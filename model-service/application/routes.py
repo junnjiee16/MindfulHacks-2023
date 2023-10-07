@@ -2,8 +2,11 @@ from . import app
 import numpy as np
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
 from flask import request
+from flask_cors import CORS
 import csv
 import urllib.request
+
+CORS(app)
 
 ### initialize model and tokenizer
 MODEL_ID = "cardiffnlp/twitter-roberta-base-emoji"
@@ -33,4 +36,5 @@ def predict_emoji(text):
 @app.route("/predict-emoji", methods=['POST'])
 def call_predict_emoji():
     data = request.get_json()
+    print(data)
     return {"emoji": predict_emoji(data['text'])}
