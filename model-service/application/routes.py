@@ -15,7 +15,12 @@ from llama_index.prompts import Prompt
 from llama_index.response_synthesizers import get_response_synthesizer
 from llama_index.indices.postprocessor import SimilarityPostprocessor
 from llama_index.query_engine import RetrieverQueryEngine
+from flask import Flask
+from flask_cors import CORS, cross_origin
 
+
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 ### initialize model and tokenizer
 MODEL_ID = "cardiffnlp/twitter-roberta-base-emoji"
 model = AutoModelForSequenceClassification.from_pretrained(MODEL_ID)
@@ -48,9 +53,9 @@ def call_predict_emoji():
 
 # Init Mistral7B-Orca
 cfg = {
-    'max_new_tokens': 512, 
+    'max_new_tokens': 256, 
     'repetition_penalty': 1.1,
-    'temperature': 0.7,
+    'temperature': 0.4,
     'context_length': 8192,
     'stop': ["<|im_end|>", "<|im_start|>"],
     'reset': False
