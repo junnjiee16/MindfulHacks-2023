@@ -1,35 +1,33 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import viteLogo from '/vite.svg'
-import './App.css'
+import { ChakraProvider, Flex, Box } from "@chakra-ui/react"
+import { Sidebar } from './components/Sidebar'
+import { Topbar } from './components/Topbar'
+import { HomePage } from './pages/HomePage';
+import { TaskPlannerPage } from './pages/TaskPlannerPage';
 
-function App() {
-  const [count, setCount] = useState(0)
 
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ChakraProvider>
+
+      {/* Topbar shows day and date */}
+      <Topbar />
+      {/* Flexbox contains sidebar and page content depending on route */}
+      <Flex>
+        <Router>
+          <Sidebar />
+          <Box p="2em">
+            <Routes>
+              {/* routes */}
+              <Route path={""} element={<HomePage />} />
+              <Route path={"/planner"} element={<TaskPlannerPage />} />
+            </Routes>
+          </Box>
+        </Router>
+      </Flex>
+
+    </ChakraProvider>
   )
 }
-
-export default App
