@@ -37,7 +37,7 @@ export function CreateTaskModal() {
 
     const predictEmoji = async () => {
         console.log('Calling predictEmoji');
-        const res = await textToEmoji(title);
+        const res = await textToEmoji(taskName);
         setEmoji(res.data.emoji);
         console.log(res.data)
     }
