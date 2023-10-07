@@ -97,4 +97,4 @@ def chat():
     )
 
     response = query_engine.query(prompt)
-    return {"result": str(response)}
+    return {"result": str(response).strip()}
