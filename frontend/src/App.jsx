@@ -2,11 +2,11 @@ import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import viteLogo from '/vite.svg'
 import { ChakraProvider, Flex, Box } from "@chakra-ui/react"
-import { Sidebar } from './components/Sidebar'
+import { Sidebar } from './components/Sidebar.jsx'
 import { Topbar } from './components/Topbar'
 import { HomePage } from './pages/HomePage';
 import { TaskPlannerPage } from './pages/TaskPlannerPage';
-
+import { JournalPage } from './pages/JournalPage';
 
 export default function App() {
   return (
@@ -23,6 +23,7 @@ export default function App() {
               {/* routes */}
               <Route path={""} element={<HomePage />} />
               <Route path={"/planner"} element={<TaskPlannerPage />} />
+              <Route path={"/journal"} element={<JournalPage />} />
             </Routes>
           </Box>
         </Router>
