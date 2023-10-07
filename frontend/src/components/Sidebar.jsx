@@ -8,7 +8,9 @@ export function Sidebar() {
             <Link to={"/planner"}>
                 Planner
             </Link>
-            <div>Journal</div>
+            <Link to={"/journal"}>
+                Journal
+            </Link>
             <div>ADHD Bot</div>
             <div>Resources</div>
         </Flex>
