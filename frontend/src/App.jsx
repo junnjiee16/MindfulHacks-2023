@@ -7,6 +7,7 @@ import { Topbar } from './components/Topbar'
 import { HomePage } from './pages/HomePage';
 import { TaskPlannerPage } from './pages/TaskPlannerPage';
 import { JournalPage } from './pages/JournalPage';
+import { Example } from './pages/framer.jsx';
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
               <Route path={""} element={<HomePage />} />
               <Route path={"/planner"} element={<TaskPlannerPage />} />
               <Route path={"/journal"} element={<JournalPage />} />
+              <Route path={"/framer"} element={<Example />} />
             </Routes>
           </Box>
         </Router>
