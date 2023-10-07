@@ -37,3 +37,16 @@ export async function saveTodo(taskName, timeLimit, emoji) {
   }
   return response;
 }
+
+export async function getTodos() {
+  let response;
+  try {
+    response = await axios.get("http://127.0.0.1:5000/all-tasks");
+  } catch (error) {
+    console.log("DEBUG ERROR", error);
+    error.code == "ERR_NETWORK"
+      ? (response = null)
+      : (response = error.response);
+  }
+  return response;
+}
