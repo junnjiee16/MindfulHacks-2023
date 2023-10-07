@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { useState, useRef } from 'react'
 import {
     Box,
@@ -49,22 +48,11 @@ export function CreateTaskModal() {
         setTaskTimeLimit(newValue);
     };
 
-    // function:
-    // import json as js object
-    // add new task to js object
-    // save js object to json file
-    function addNewObject(newObj) {
-        var newTasksData = tasksData;
-        newTasksData.push(newObj);
-        var jsonStr = JSON.stringify(newTasksData);
-        fs.writeFileSync(`../todoDatabase.json`, jsonStr);
-    }
-
     return (
         <>
-            <Button onClick={onOpen}>Open Modal</Button>
+            <Button onClick={onOpen}>New Task</Button>
 
-            <Modal isOpen={isOpen} >
+            <Modal isOpen={isOpen} onClose={onClose} >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Create your Task!</ModalHeader>

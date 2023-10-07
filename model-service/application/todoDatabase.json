@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "task": "Do the laundry",
+        "time": 15,
+        "emoji": "\u2764"
+    },
+    {
+        "task": "Create a Vite App",
+        "time": "20",
+        "emoji": "\ud83d\ude02"
+    }
+]

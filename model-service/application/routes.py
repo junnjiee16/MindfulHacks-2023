@@ -80,3 +80,11 @@ def save_journal():
     return "success"
 
     
+
+
+@app.route("/all-tasks", methods=["GET"])
+def get_all_tasks():
+    with open(os.path.join(os.getcwd(), "application\\todoDatabase.json"), "r") as file:
+        data_dict = json.load(file)
+    
+    return data_dict
