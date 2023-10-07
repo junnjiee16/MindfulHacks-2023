@@ -5,6 +5,9 @@ from flask import request
 from flask_cors import CORS
 import csv
 import urllib.request
+import json
+import os
+import pymongo
 
 CORS(app)
 
@@ -38,3 +41,50 @@ def call_predict_emoji():
     data = request.get_json()
     print(data)
     return {"emoji": predict_emoji(data['text'])}
+
+# API to save task data
+@app.route("/save-task", methods=['POST'])
+def save_task():
+    data = request.get_json()
+    with open(os.path.join(os.getcwd(), "application\\todoDatabase.json"), "r") as file:
+        data_dict = json.load(file)
+
+    # create dict
+    new_dict = {
+        "task": data['task'],
+        "time": data['time'],
+        "emoji": data['emoji']
+    }
+    data_dict.append(new_dict)
+
+    with open(os.path.join(os.getcwd(), "application\\todoDatabase.json"), "w") as file:
+        json.dump(data_dict, file)
+    
+    return data_dict
+
+@app.route("/journal", methods=['POST'])
+def save_journal():
+    data = request.get_json()
+
+    question_list = data['questions']
+    answer_list = data['answers']
+    date = data['date']
+
+    pymongo_client = pymongo.MongoClient("mongodb+srv://teamyellow:teamyellow@lavender-ai.0fhjull.mongodb.net/")
+    db = pymongo_client["Backend"]
+    collection = db["journal"]
+
+
+    collection.insert_one({"date": date, "questions": question_list, "answers": answer_list})
+
+    return "success"
+
+    
+
+
+@app.route("/all-tasks", methods=["GET"])
+def get_all_tasks():
+    with open(os.path.join(os.getcwd(), "application\\todoDatabase.json"), "r") as file:
+        data_dict = json.load(file)
+    
+    return data_dict

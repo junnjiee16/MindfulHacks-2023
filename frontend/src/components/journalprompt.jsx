@@ -5,9 +5,12 @@ import {
   Heading,
   Textarea,
   Text,
+  useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 
-export function Journalprompt({ arrayOfQuestions }) {
+export function Journalprompt({ arrayOfQuestions, selectedDate }) {
+  const toast = useToast();
   const [answer, setAnswer] = useState("");
   const [answerArray, setAnswerArray] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -33,27 +36,75 @@ export function Journalprompt({ arrayOfQuestions }) {
   }, [answerArray]); // Re-run the effect whenever answerArray changes
 
 
-  const submitAnswers = async (answerArray) => {
-    try {
-      console.log("Submitting answers:", answerArray);
-      console.log("Submitting answers:", answerArray);
-      const response = await fetch("https://example.com/api/endpoint", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ answerArray }),
-      });
+  // const submitAnswers = async (answerArray) => {
+  //   try {
+  //     console.log("Submitting :", answerArray);
+  //     console.log("Submitting answers:", answerArray);
+  //     const response = await fetch("http://127.0.0.1:5000/journal", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ answerArray }),
+  //     });
 
-      if (response.ok) {
-        console.log("Answers submitted successfully!");
-      } else {
-        console.error("Error submitting answers:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
+  //     if (response.ok) {
+  //       console.log("Answers submitted successfully!");
+  //     } else {
+  //       console.error("Error submitting answers:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
+
+
+  function submitAnswers(answerArray) {
+
+    // setStr(idList.map(Number).toString());
+
+    // console.log(str)
+    const requestBody = {
+      questions: arrayOfQuestions,
+      answers: answerArray,
+      date: selectedDate,
+    };
+    console.log(requestBody);
+    axios
+      .post(
+        "http://127.0.0.1:5000/journal",
+        requestBody
+      )
+      .then(
+        (response) => {
+          if (response.status === 200) {
+            // setDisplay("");
+            toast({
+              title: `Thanks for journaling!`,
+              description: "Please refresh the page / close this alert",
+              status: "success",
+              duration: 9000,
+              isClosable: true,
+              onCloseComplete: () => {
+                window.location.reload();
+              },
+            });
+          }
+        },
+        (error) => {
+          toast({
+            title: `Error`,
+            description: `Sorry ${error.response.data.message} . Journal failed`,
+            status: "error",
+            duration: 100000,
+            isClosable: true,
+            onCloseComplete: () => {
+              window.location.reload();
+            },
+          });
+        }
+      );
+  }
 
   return (
     <>

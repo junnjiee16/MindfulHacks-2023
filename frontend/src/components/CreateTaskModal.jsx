@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { useState, useRef } from 'react'
 import {
     Box,
@@ -20,8 +19,7 @@ import {
     NumberIncrementStepper,
     NumberDecrementStepper,
 } from '@chakra-ui/react'
-import { textToEmoji } from '../apiCalls'
-import tasksData from '../todoDatabase.json'; // Import the JSON data
+import { textToEmoji, saveTodo } from '../apiCalls'
 
 export function CreateTaskModal() {
     // const nameInputRef = useRef(null);
@@ -42,37 +40,19 @@ export function CreateTaskModal() {
         console.log(res.data)
     }
 
-
-    // function:
-    // import json as js object
-    // add new task to js object
-    // save js object to json file
-    function addNewObject(newObj) {
-        var newTasksData = tasksData;
-        newTasksData.push(newObj);
-        var jsonStr = JSON.stringify(newTasksData);
-        fs.writeFileSync(`../todoDatabase.json`, jsonStr);
-    }
+    const saveNewTodo = async () => {
+        const res = await saveTodo(taskName, taskTimeLimit, emoji);
+    }    
+    
     const handleNumberChange = (newValue) => {
         setTaskTimeLimit(newValue);
     };
 
-    // function:
-    // import json as js object
-    // add new task to js object
-    // save js object to json file
-    function addNewObject(newObj) {
-        var newTasksData = tasksData;
-        newTasksData.push(newObj);
-        var jsonStr = JSON.stringify(newTasksData);
-        fs.writeFileSync(`../todoDatabase.json`, jsonStr);
-    }
-
     return (
         <>
-            <Button onClick={onOpen}>Open Modal</Button>
+            <Button onClick={onOpen}>New Task</Button>
 
-            <Modal isOpen={isOpen} >
+            <Modal isOpen={isOpen} onClose={onClose} >
                 <ModalOverlay />
                 <ModalContent>
                     <ModalHeader>Create your Task!</ModalHeader>
@@ -112,7 +92,7 @@ export function CreateTaskModal() {
                           
                             console.log(`Name of task: ${taskName}`);
                             console.log(`Minutes: ${taskTimeLimit}`);
-                              // addNewObject({ task: taskName, timeLimit: taskTimeLimit })
+                            saveNewTodo()
                             window.location.reload();
 
                         }} >Create Task</Button>
