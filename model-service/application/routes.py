@@ -8,6 +8,7 @@ import urllib.request
 import json
 import os
 import pymongo
+from flask import jsonify
 
 CORS(app)
 
@@ -80,3 +81,22 @@ def save_journal():
     return "success"
 
     
+@app.route("/journal", methods=['GET'])
+def retrieve_journal():
+    try:
+        pymongo_client = pymongo.MongoClient("mongodb+srv://teamyellow:teamyellow@lavender-ai.0fhjull.mongodb.net/")
+        db = pymongo_client["Backend"]
+        collection = db["journal"]
+
+        # Retrieve all documents
+        documents = list(collection.find({}))
+
+        # Convert ObjectId to str for JSON serialization
+        for doc in documents:
+            doc["_id"] = str(doc["_id"])
+            doc['date'] = str(doc['date']).split("T")[0]
+
+        return jsonify(documents)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
