@@ -35,8 +35,10 @@ export function JournalPage() {
   const { isOpen, onToggle } = useDisclosure();
 
   const [startButtonVisible, setStartButtonVisible] = useState(true);
+  const [journalQuestionVisible, setJournalQuestionVisible] = useState(false);
   const [selectedDayJournal, setSelectedDayJournal] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(Date.now());
+
 
   useEffect(() => {
     console.log(selectedDate);
@@ -48,9 +50,8 @@ export function JournalPage() {
           id: data._id,
           questions: data.questions,
         });
-        console.log("this is selectedDayJournal");
-        console.log(selectedDayJournal);
         setStartButtonVisible(!startButtonVisible);
+        setJournalQuestionVisible(false)
       } else if (
         (data.date !== selectedDate.split("T")[0]) &
         (startButtonVisible === false)
@@ -58,11 +59,16 @@ export function JournalPage() {
         setStartButtonVisible(!startButtonVisible);
       }
     });
+
+    
   }, [selectedDate]);
+
+
+  
 
   const handleStartButtonClick = () => {
     onToggle();
-    setStartButtonVisible(false);
+    setJournalQuestionVisible(true);
   };
 
   return (
@@ -75,6 +81,7 @@ export function JournalPage() {
       <Box bg="gray.100" p="4" borderRadius="md">
         <Flex justifyContent="space-between" alignItems="center">
           <Input
+          defaultValue={Date.now()}
             placeholder="Select Date and Time"
             size="md"
             type="datetime-local"
@@ -133,7 +140,7 @@ export function JournalPage() {
       )}
 
       {/* Conditionally render JournalPrompt based on isOpen state */}
-      {isOpen && (
+      {journalQuestionVisible && (
         <Journalprompt
           arrayOfQuestions={[
             "What are my biggest strengths and weaknesses??",
