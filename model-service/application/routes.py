@@ -7,6 +7,7 @@ import csv
 import urllib.request
 import json
 import os
+import pymongo
 
 CORS(app)
 
@@ -60,3 +61,22 @@ def save_task():
         json.dump(data_dict, file)
     
     return data_dict
+
+@app.route("/journal", methods=['POST'])
+def save_journal():
+    data = request.get_json()
+
+    question_list = data['questions']
+    answer_list = data['answers']
+    date = data['date']
+
+    pymongo_client = pymongo.MongoClient("mongodb+srv://teamyellow:teamyellow@lavender-ai.0fhjull.mongodb.net/")
+    db = pymongo_client["Backend"]
+    collection = db["journal"]
+
+
+    collection.insert_one({"date": date, "questions": question_list, "answers": answer_list})
+
+    return "success"
+
+    

@@ -6,6 +6,7 @@ export function JournalPage() {
   const { isOpen, onToggle } = useDisclosure();
 
   const [startButtonVisible, setStartButtonVisible] = useState(true);
+  const [selectedDate, setSelectedDate] = useState("");
 
   const handleStartButtonClick = () => {
     onToggle();
@@ -22,10 +23,12 @@ export function JournalPage() {
       <Box bg="gray.100" p="4" borderRadius="md">
         <Flex justifyContent="space-between" alignItems="center">
         <Input
- placeholder="Select Date and Time"
- size="md"
- type="datetime-local"
-/>
+        placeholder="Select Date and Time"
+        size="md"
+        type="datetime-local"
+        value={selectedDate}
+        onChange={(e) => setSelectedDate(e.target.value)}
+      />
         </Flex>
       </Box>
 
@@ -44,6 +47,7 @@ export function JournalPage() {
             "What's 9+10?",
             "INC suk?",
           ]}
+          selectedDate={selectedDate} // Pass the selectedDate as a prop
         />
       )}
     </Box>
