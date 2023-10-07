@@ -5,11 +5,12 @@ import { useState } from "react"
 
 export function Chatbot() {
     const [todos, setTodos] = useState("");
+    const [response, setResponse] = useState("");
 
     const handlePrompt = async () => {
         const res = await getLLMResponse(todos)
         console.log(res.data)
-        setTodos(res.data);
+        setResponse(res.data.result);
     }
 
     const handleTextChange = (input) => setTodos(input.target.value);
@@ -21,12 +22,15 @@ export function Chatbot() {
                     handleTextChange(e)
                 }} placeholder='Ask something...' width={"50vw"} mr={"10px"}/>
                 <Button onClick={(todos) => {
+                    setResponse("loading...")
                     handlePrompt(todos)
                 }} bg={"tomato"}>Enter</Button>
             </Flex>
 
             <Text textAlign={"left"} width={"55vw"} align={"justify"}>
-                <Box></Box>
+                <Box>
+                    {response}
+                </Box>
             </Text>
         </VStack>
     )

@@ -58,7 +58,7 @@ export function Sidebar() {
                 <NavItem navSize={navSize} icon={FiHome} title="Dashboard" description="This is the description for the dashboard." route = "/" />
                 <NavItem navSize={navSize} icon={FiCalendar} title="To-Do-List" route = "/planner" />
                 <NavItem navSize={navSize} icon={FiBriefcase} title="Journal" route = "/journal"/>
-                <NavItem navSize={navSize} icon={FiSpeaker} title="Chatbot" route = "/"/>
+                <NavItem navSize={navSize} icon={FiSpeaker} title="Chatbot" route = "/chatbot"/>
 
             </Flex>
 
