@@ -19,7 +19,7 @@ export default function App() {
       <Flex>
         <Router>
           <Sidebar />
-          <Box p="2em">
+          <Flex p="2em" justifyContent={"center"}>
             <Routes>
               {/* routes */}
               <Route path={""} element={<HomePage />} />
@@ -27,7 +27,7 @@ export default function App() {
               <Route path={"/journal"} element={<JournalPage />} />
               <Route path={"/framer"} element={<Example />} />
             </Routes>
-          </Box>
+          </Flex>
         </Router>
       </Flex>
 

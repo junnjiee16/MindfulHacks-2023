@@ -88,3 +88,22 @@ def get_all_tasks():
         data_dict = json.load(file)
     
     return data_dict
+
+@app.route("/put-top", methods=["POST"])
+def insert_as_top():
+    data = request.get_json()
+    print(data)
+    with open(os.path.join(os.getcwd(), "application\\todoDatabase.json"), "r") as file:
+        data_dict = json.load(file)
+    
+    for i, obj in enumerate(data_dict):
+        if obj['id'] == data['id']:
+            top_obj = data_dict.pop(i)
+            data_dict.insert(0, top_obj)
+            break
+
+    with open(os.path.join(os.getcwd(), "application\\todoDatabase.json"), "w") as file:
+        json.dump(data_dict, file)
+    
+    return data_dict
+    

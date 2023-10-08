@@ -50,3 +50,21 @@ export async function getTodos() {
   }
   return response;
 }
+
+export async function popToTop(topId) {
+  let response;
+  try {
+    response = await axios.post(
+      "http://127.0.0.1:5000/put-top",
+      {
+        id: topId
+      },
+    );
+  } catch (error) {
+    console.log("DEBUG ERROR", error);
+    error.code == "ERR_NETWORK"
+      ? (response = null)
+      : (response = error.response);
+  }
+  return response;
+}
