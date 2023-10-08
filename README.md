@@ -1,2 +1,4 @@
 # mindfulhacks-2023
-Solution description here.
+Team: GPT-5
+
+ADHD Focus App
