@@ -25,7 +25,6 @@ export default function App() {
               <Route path={""} element={<HomePage />} />
               <Route path={"/planner"} element={<TaskPlannerPage />} />
               <Route path={"/journal"} element={<JournalPage />} />
-              <Route path={"/framer"} element={<Example />} />
             </Routes>
           </Box>
         </Router>

@@ -72,7 +72,7 @@ export function JournalPage() {
   };
 
   return (
-    <Box width="100em" height="10em">
+    <Box width="100%" height="10em">
       {/* Header with the title */}
       <Text fontSize="xl" fontWeight="bold" mb="4">
         Journal
